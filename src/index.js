@@ -82,6 +82,7 @@ function roll(dicePool) {
       }
    });
 
+   /* get all symbol totals */
    const total = diceResults.reduce((current, nextDie) => ({
       s: current.s + (nextDie.symbols.match(/s/g) || []).length,
       a: current.a + (nextDie.symbols.match(/a/g) || []).length,
@@ -89,9 +90,10 @@ function roll(dicePool) {
       f: current.f + (nextDie.symbols.match(/f/g) || []).length,
       h: current.h + (nextDie.symbols.match(/h/g) || []).length,
       d: current.d + (nextDie.symbols.match(/d/g) || []).length,
-      num: total.num + (nextDie.total || 0),
+      num: current.num + (nextDie.total || 0),
    }), { s: 0, a: 0, t: 0, f: 0, h: 0, d: 0, num: 0 });
 
+   /* add t/d to s/f; cancel s/f and a/h */
    const summary = {};
    if (total.num) summary.num = total.num;
    if (total.t) summary.t = total.t;
@@ -107,6 +109,7 @@ function roll(dicePool) {
       summary.h = total.h - total.a;
    }
 
+   /* create readable result string */
    let result = [];
    if (summary.s) result.push(`${summary.s} ${Dice.symbolMapper.s}`);
    else if (summary.f) result.push(`${summary.f} failure`);
@@ -115,7 +118,6 @@ function roll(dicePool) {
    if (summary.t) result.push(`${summary.t} triumph`);
    if (summary.d) result.push(`${summary.d} despair`);
    if (summary.num) result.push(summary.num);
-
    result = result.join(', ');
 
    return {
