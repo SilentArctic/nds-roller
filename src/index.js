@@ -1,5 +1,6 @@
-import Faces from './constants/faces.constants';
 import * as Dice from './constants/dice.constants';
+import Faces from './constants/faces.constants';
+import Icons from './constants/icons.constants';
 
 /**
  * @typedef {Object} DieResult
@@ -45,7 +46,7 @@ function roll(dicePool) {
    dicePool.forEach((die) => {
       if (!Dice.diceNames.includes(die)) {
          // eslint-disable-next-line no-console
-         console.error(`${die} is not a valid die type and will be skipped. Valid options are: ${Dice.diceNames.join(', ')}`);
+         console.error(`"${die}" is not a valid die type and will be skipped. Valid options are: ${Dice.diceNames.join(', ')}`);
          return;
       }
 
@@ -94,40 +95,74 @@ function roll(dicePool) {
    }), { s: 0, a: 0, t: 0, f: 0, h: 0, d: 0, num: 0 });
 
    /* add t/d to s/f; cancel s/f and a/h */
-   const summary = {};
-   if (total.num) summary.num = total.num;
-   if (total.t) summary.t = total.t;
-   if (total.d) summary.d = total.d;
+   const result = {};
+   if (total.num) result.num = total.num;
+   if (total.t) result.t = total.t;
+   if (total.d) result.d = total.d;
    if (total.s + total.t > total.f + total.d) {
-      summary.s = total.s + total.t - total.f;
+      result.s = total.s + total.t - total.f;
    } else if (total.f + total.d > total.s + total.t) {
-      summary.f = total.f + total.d - total.s;
+      result.f = total.f + total.d - total.s;
    }
    if (total.a > total.h) {
-      summary.a = total.a - total.h;
+      result.a = total.a - total.h;
    } else if (total.h > total.a) {
-      summary.h = total.h - total.a;
+      result.h = total.h - total.a;
    }
 
    /* create readable result string */
-   let result = [];
-   if (summary.s) result.push(`${summary.s} ${Dice.symbolMapper.s}`);
-   else if (summary.f) result.push(`${summary.f} failure`);
-   if (summary.a) result.push(`${summary.a} advantage`);
-   else if (summary.h) result.push(`${summary.h} threat`);
-   if (summary.t) result.push(`${summary.t} triumph`);
-   if (summary.d) result.push(`${summary.d} despair`);
-   if (summary.num) result.push(summary.num);
-   result = result.join(', ');
+   let summary = [];
+   if (result.s) summary.push(`${result.s} ${Dice.symbolMapper.s}`);
+   else if (result.f) summary.push(`${result.f} failure`);
+   if (result.a) summary.push(`${result.a} advantage`);
+   else if (result.h) summary.push(`${result.h} threat`);
+   if (result.t) summary.push(`${result.t} triumph`);
+   if (result.d) summary.push(`${result.d} despair`);
+   if (result.num) summary.push(result.num);
+   summary = summary.join(', ');
 
    return {
       dice: diceResults,
       total,
-      summary,
       result,
+      summary,
    };
+}
+
+/**
+ * Get raw html symbols from a provided input
+ * @param {SymbolTotal|array|string} input -
+ * @returns {string} - string of icons
+ */
+function icons(input) {
+   let result = null;
+
+   if (typeof input === 'string') {
+      result = input
+         .split('')
+         .map((char) => Icons[char] || char)
+         .join('');
+   } else if (Array.isArray(input)) {
+      result = input
+         .map((char) => Icons[char] || char)
+         .join('');
+   } else if (typeof input === 'object') {
+      result = Object.keys(input).reduce((current, nextChar) => {
+         if (Icons[nextChar]) {
+            return current + Array(input[nextChar])
+               .fill(Icons[nextChar])
+               .join('');
+         }
+         return current;
+      }, '');
+   }
+
+   // eslint-disable-next-line no-console
+   console.error('Invalid input');
+   return result;
 }
 
 export default {
    roll,
+   icons,
 };
