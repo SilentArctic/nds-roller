@@ -44,6 +44,7 @@ function roll(dicePool) {
    const diceResults = [];
    dicePool.forEach((die) => {
       if (!Dice.diceNames.includes(die)) {
+         // eslint-disable-next-line no-console
          console.error(`${die} is not a valid die type and will be skipped. Valid options are: ${Dice.diceNames.join(', ')}`);
          return;
       }
