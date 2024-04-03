@@ -2,17 +2,38 @@ import Faces from './constants/faces.constants';
 import * as Dice from './constants/dice.constants';
 
 /**
+ * @typedef {Object} DieResult
+ * @property {string} name - die name
+ * @property {number} face - face determined by the roll
+ * @property {string} symbols - rolled symbols
+ * @property {number} [total] - value of numeric dice
+ */
+
+/**
+ * @typedef {Object} SymbolTotal
+ * @property {number} s - number of success symbols
+ * @property {number} a - number of advantage symbols
+ * @property {number} t - number of triumph symbols
+ * @property {number} f - number of failure symbols
+ * @property {number} h - number of threat symbols
+ * @property {number} d - number of despair symbols
+ * @property {number} num - sum of numeric dice
+ */
+
+/**
  * @typedef {Object} RollResult
- * @property {string} faces - result of each die
- * @property {string} symbols - total symbols after any cancellations
+ * @property {DieResult[]} dice -
+ * @property {SymbolTotal} total - total symbols, uncanceled
+ * @property {SymbolTotal} summary - total symbols, after canceling
+ * @property {string} result - Human-readable output
  */
 
 /**
  * Roll given dice and return result
  * @param {(
  *    'boost'|'b'|'setback'|'k'|'ability'|'g'|'difficulty'|'p'|'proficiency'|'y'|'challenge'|'r'|
- *    '10'|'100'|'s'|'a'|'t'|'f'|'h'|'d')[]
- * } dicePool - Dice to be rolled
+ *    '10'|'100'|'s'|'a'|'t'|'f'|'h'|'d'
+ * )[]} dicePool - Dice to be rolled
  * @returns {RollResult} - Result of rolled dice from given dicePool
  */
 function roll(dicePool) {
@@ -23,7 +44,8 @@ function roll(dicePool) {
    const diceResults = [];
    dicePool.forEach((die) => {
       if (!Dice.diceNames.includes(die)) {
-         throw new Error(`${die} is not a valid die type. Valid options are: ${Dice.diceNames.join(', ')}`);
+         console.error(`${die} is not a valid die type and will be skipped. Valid options are: ${Dice.diceNames.join(', ')}`);
+         return;
       }
 
       if (Dice.numbers.includes(die)) {
