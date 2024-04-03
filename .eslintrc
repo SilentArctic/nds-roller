@@ -1,0 +1,12 @@
+{
+   "root": true,
+   "env": {
+      "node": true
+   },
+   "extends": "airbnb",
+   "rules": {
+      "indent": ["error", 3],
+      "linebreak-style": 0,
+      "object-curly-newline": 0
+   }
+}

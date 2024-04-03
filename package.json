@@ -1,0 +1,24 @@
+{
+  "name": "nds-roller",
+  "version": "1.0.0",
+  "description": "Narrative Dice roller for FFG/EDGE Studio's Genesys RPG system.",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint --ext .js src",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "nds",
+    "narrative dice",
+    "genesysrpg",
+    "genesysref"
+  ],
+  "author": "SilentArctic",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "husky": "^9.0.11"
+  }
+}
