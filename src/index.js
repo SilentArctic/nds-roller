@@ -1,6 +1,6 @@
-import * as Dice from './constants/dice.constants';
-import Faces from './constants/faces.constants';
-import Icons from './constants/icons.constants';
+import * as Dice from './constants/dice.constants.js';
+import Faces from './constants/faces.constants.js';
+import Icons from './constants/icons.constants.js';
 
 /**
  * @typedef {Object} DieResult
@@ -63,6 +63,7 @@ function roll(dicePool) {
             name: die,
             face: die,
             symbols: die,
+            image: Faces[Dice.symbolMapper[die]].image,
          });
       } else {
          /* handle dice */
@@ -73,22 +74,23 @@ function roll(dicePool) {
 
          const faceCount = Object.keys(Faces[dieName]).length;
          const resultFace = Math.floor(Math.random() * faceCount) + 1;
-         const resultSymbols = Faces[dieName][resultFace];
+         const { symbols, image } = Faces[dieName][resultFace];
 
          diceResults.push({
             name: dieName,
             face: resultFace,
-            symbols: resultSymbols,
+            symbols,
+            image,
          });
       }
    });
 
    /* get all symbol totals */
    const total = diceResults.reduce((current, nextDie) => ({
-      s: current.s + (nextDie.symbols.match(/s/g) || []).length,
+      s: current.s + (nextDie.symbols.match(/s/g) || []).length + (nextDie.symbols.match(/t/g) || []).length,
       a: current.a + (nextDie.symbols.match(/a/g) || []).length,
       t: current.t + (nextDie.symbols.match(/t/g) || []).length,
-      f: current.f + (nextDie.symbols.match(/f/g) || []).length,
+      f: current.f + (nextDie.symbols.match(/f/g) || []).length + (nextDie.symbols.match(/d/g) || []).length,
       h: current.h + (nextDie.symbols.match(/h/g) || []).length,
       d: current.d + (nextDie.symbols.match(/d/g) || []).length,
       num: current.num + (nextDie.total || 0),
@@ -99,11 +101,13 @@ function roll(dicePool) {
    if (total.num) result.num = total.num;
    if (total.t) result.t = total.t;
    if (total.d) result.d = total.d;
+   /* cancel s/f */
    if (total.s + total.t > total.f + total.d) {
-      result.s = total.s + total.t - total.f;
+      result.s = total.s - total.f;
    } else if (total.f + total.d > total.s + total.t) {
-      result.f = total.f + total.d - total.s;
+      result.f = total.f - total.s;
    }
+   /* cancel a/h */
    if (total.a > total.h) {
       result.a = total.a - total.h;
    } else if (total.h > total.a) {
@@ -134,7 +138,7 @@ function roll(dicePool) {
  * @param {SymbolTotal|array|string} input -
  * @returns {string} - string of icons
  */
-function icons(input) {
+function toIcons(input) {
    let result = null;
 
    if (typeof input === 'string') {
@@ -164,5 +168,5 @@ function icons(input) {
 
 export default {
    roll,
-   icons,
+   toIcons,
 };

@@ -7,6 +7,8 @@ This is my implementation of a dice roller for FFG/EDGE Studio's narrative dice 
 ### nds.roll
 Provide an array of dice, and get the randomized result. This is a basic implementation using JavaScript's `Math.random()` method. Results are returned in a variety of reports including dice name/face/symbol information, total symbols, symbols after cancelling, and a string reporting the canceled result.
 
+NOTE: dice output order will be the same as the input order.
+
 ```js
 // Use dice colors or names, and add symbols
 const dicePool = ['proficiency', 'g', 'p', 'b', 's', 'h'];
@@ -14,10 +16,10 @@ nds.roll(dicePool);
 /**
  * {
  *    dice: [
- *       { name: 'proficiency', face: 12, symbols: 't' },
- *       { name: 'ability', face: 7, symbols: 'sa' },
- *       { name: 'difficulty', face: 8, symbols: 'fh' },
- *       { name: 'boost': face: 2, symbols: '' },
+ *       { name: 'proficiency', face: 12, symbols: 't', image: '...' },
+ *       { name: 'ability', face: 7, symbols: 'sa', image: '...' },
+ *       { name: 'difficulty', face: 8, symbols: 'fh', image: '...' },
+ *       { name: 'boost': face: 2, symbols: '', image: '...' },
  *       { name: 's', face: 's', symbols: 's' },
  *       { name: 'h', face: 'h', symbols: 'h' },
  *    ],
