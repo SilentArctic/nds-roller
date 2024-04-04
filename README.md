@@ -46,20 +46,20 @@ nds.roll(numberPool);
  */
 ```
 
-### nds.icons
+### nds.toIcons
 Turn symbol abbreviations into HTML icons. Acceptable inputs are a string or array of symbol abbreviations, or an object with abbreviation symbol keys and numerical values (such as the `total` and `result` values provided by `roll` (see above)).
 
 WARNING: browser older browsers/devices may not correctly display these icons - use with caution.
 
 ```js
 // get icons from a string
-nds.icons('satfhd'); // ✲▲❂✖▼⦻
+nds.toIcons('satfhd'); // ✲▲❂✖▼⦻
 
 // get icons from an array
-nds.icons(['s', 'a', 't', 'f', 'h', 'd']) // ✲▲❂✖▼⦻
+nds.toIcons(['s', 'a', 't', 'f', 'h', 'd']) // ✲▲❂✖▼⦻
 
 // get icons from a roll result
-nds.icons(nds.roll(['y', 'g', 'p']).result) // ✲✲▼
+nds.toIcons(nds.roll(['y', 'g', 'p']).result) // ✲✲▼
 ```
 
 ## Abbreviations
