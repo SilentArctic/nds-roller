@@ -129,7 +129,7 @@ function roll(dicePool) {
       dice: diceResults,
       total,
       result,
-      summary,
+      summary: summary || '0 success',
    };
 }
 
@@ -159,10 +159,11 @@ function toIcons(input) {
          }
          return current;
       }, '');
+   } else {
+      // eslint-disable-next-line no-console
+      console.error('Invalid input');
    }
 
-   // eslint-disable-next-line no-console
-   console.error('Invalid input');
    return result;
 }
 

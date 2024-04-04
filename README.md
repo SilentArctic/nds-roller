@@ -10,6 +10,8 @@ Provide an array of dice, and get the randomized result. This is a basic impleme
 NOTE: dice output order will be the same as the input order.
 
 ```js
+import nds from 'nds-roller';
+
 // Use dice colors or names, and add symbols
 const dicePool = ['proficiency', 'g', 'p', 'b', 's', 'h'];
 nds.roll(dicePool);
@@ -52,6 +54,8 @@ Turn symbol abbreviations into HTML icons. Acceptable inputs are a string or arr
 WARNING: browser older browsers/devices may not correctly display these icons - use with caution.
 
 ```js
+import nds from 'nds-roller';
+
 // get icons from a string
 nds.toIcons('satfhd'); // ✲▲❂✖▼⦻
 
