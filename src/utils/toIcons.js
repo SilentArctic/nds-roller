@@ -20,9 +20,9 @@ function toIcons(input) {
    } else if (typeof input === 'object') {
       result = Object.keys(input).reduce((current, nextChar) => {
          if (ICONS[nextChar]) {
-            return current + Array(input[nextChar])
+            return current + (input[nextChar] > 0 ? Array(input[nextChar])
                .fill(ICONS[nextChar])
-               .join('');
+               .join('') : '');
          }
          return current;
       }, '');
