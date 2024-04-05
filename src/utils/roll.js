@@ -64,11 +64,12 @@ function roll(dicePool, note = '') {
          });
       } else if (DICE.Symbols.includes(die)) {
          /* handle symbols */
+         const name = getSymbolName(die);
          diceResults.push({
-            name: die,
+            name,
             face: die,
             symbols: die,
-            image: FACES[getSymbolName(die)].image,
+            image: FACES[name].image,
          });
       } else {
          /* handle dice */
