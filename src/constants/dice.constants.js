@@ -1,9 +1,9 @@
-export const numbers = [
+const Numbers = [
    '10',
    '100',
 ];
 
-export const symbols = [
+const Symbols = [
    's',
    'a',
    't',
@@ -12,18 +12,18 @@ export const symbols = [
    'd',
 ];
 
-export const diceNames = [
+const DiceNames = [
    'boost', 'b',
    'setback', 'k',
    'ability', 'g',
    'difficulty', 'p',
    'proficiency', 'y',
    'challenge', 'r',
-   ...numbers,
-   ...symbols,
+   ...Numbers,
+   ...Symbols,
 ];
 
-export const diceMapper = {
+const DiceNameMap = {
    b: 'boost',
    k: 'setback',
    g: 'ability',
@@ -32,11 +32,39 @@ export const diceMapper = {
    r: 'challenge',
 };
 
-export const symbolMapper = {
+const DiceLetterMap = {
+   boost: 'b',
+   setback: 'k',
+   ability: 'g',
+   difficulty: 'p',
+   proficiency: 'y',
+   challenge: 'r',
+};
+
+const SymbolNameMap = {
    s: 'success',
    a: 'advantage',
    t: 'triumph',
    f: 'failure',
    h: 'threat',
    d: 'despair',
+};
+
+const SymbolLetterMap = {
+   success: 's',
+   advantage: 'a',
+   triumph: 't',
+   failure: 'f',
+   threat: 'h',
+   despair: 'd',
+};
+
+export default {
+   Numbers,
+   Symbols,
+   DiceNames,
+   DiceNameMap,
+   DiceLetterMap,
+   SymbolNameMap,
+   SymbolLetterMap,
 };

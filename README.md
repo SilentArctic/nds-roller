@@ -7,6 +7,8 @@ This is my implementation of a dice roller for FFG/EDGE Studio's narrative dice 
 ### nds.roll
 Provide an array of dice, and get the randomized result. This is a basic implementation using JavaScript's `Math.random()` method. Results are returned in a variety of reports including dice name/face/symbol information, total symbols, symbols after cancelling, and a string reporting the canceled result.
 
+Add a note as the second parameter which will be returned with the outcome and saved in the log.
+
 NOTE: dice output order will be the same as the input order.
 
 ```js
@@ -14,7 +16,7 @@ import nds from 'nds-roller';
 
 // Use dice colors or names, and add symbols
 const dicePool = ['proficiency', 'g', 'p', 'b', 's', 'h'];
-nds.roll(dicePool);
+nds.roll(dicePool, 'Test roll');
 /**
  * {
  *    dice: [
@@ -27,7 +29,8 @@ nds.roll(dicePool);
  *    ],
  *    total: { s: 3, a: 1, t: 1, f: 1, h: 2 },
  *    result: { s: 2, t: 1, h: 1 },
- *    summary: '2 success, 1 threat, 1 triumph'
+ *    summary: '2 success, 1 threat, 1 triumph',
+ *    note: 'Test roll',
  * }
  */
 
@@ -64,6 +67,54 @@ nds.toIcons(['s', 'a', 't', 'f', 'h', 'd']) // ✲▲❂✖▼⦻
 
 // get icons from a roll result
 nds.toIcons(nds.roll(['y', 'g', 'p']).result) // ✲✲▼
+```
+
+### nds.getDieName / nds.getDieLetter
+Turn a die letter into its name, or vice versa.
+
+```js
+import nds from 'nds-roller';
+
+nds.getDieName('g');
+// 'ability'
+
+nds.getDieLetter('ability');
+// 'g'
+```
+
+### nds.getSymbolName / nds.getSymbolLetter
+Turn a symbol letter into its name, or vice versa.
+
+```js
+import nds from 'nds-roller';
+
+nds.getSymbolName('t');
+// 'triumph'
+
+nds.getSymbolLetter('threat');
+// 'h'
+```
+
+### nds.log
+Gives a readout of all previous rolls including the outcome, note, and timestamp. This log is mutable and can be manipulated.
+
+```js
+nds.log();
+/**
+ * [
+ *    {
+ *       outcome: {
+ *          dice: [...],
+ *          total: {...},
+ *          result: {...},
+ *          summary: '...',
+ *          note: 'Test roll',
+ *       },
+ *       timestamp: new Date(),
+ *    },
+ *    {...}
+ * ]
+ */
 ```
 
 ## Abbreviations
